@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Client Data App</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    .container { max-width: 600px; margin: auto; }
+    input, button { padding: 8px; margin: 5px; width: 100%; }
+    table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+    th, td { border: 1px solid #ddd; padding: 8px; }
+    th { background-color: #f4f4f4; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Home Page</h1>
+    <form id="dataForm">
+      <input type="text" id="name" placeholder="Enter Name" required>
+      <input type="email" id="email" placeholder="Enter Email" required>
+      <button type="submit">Submit</button>
+    </form>
+
+    <hr>
+    <h2><a href="admin.html">Go to Admin Page</a></h2>
+  </div>
+
+  <script>
+    const API_URL = "https://pebki702ag.execute-api.ap-south-1.amazonaws.com/prod/";
+
+    document.getElementById("dataForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email })
+      });
+
+      const result = await response.json();
+      alert("✅ Data saved: " + JSON.stringify(result));
+    });
+  </script>
+</body>
+</html>
